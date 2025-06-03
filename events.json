@@ -55,5 +55,26 @@
     "user_id": null,
     "anonymous_id": "xxx",
     "timestamp": "2025-05-06T14:09:33.719Z"
+  },
+  {
+    "event_name": "Wallet pop up",
+    "properties": {},
+    "user_id": null,
+    "anonymous_id": "xxx",
+    "timestamp": "2025-06-02T14:44:24.206Z"
+  },
+  {
+    "event_name": "[TIME]_TO_GENERATE_RESPONSE",
+    "properties": {
+      "thread_id": "420fb0ec-9413-4d78-ace6-88e5f65fead3",
+      "thread_title": "",
+      "thread_sources": [],
+      "input_value": "{\"id\":\"420fb0ec-9413-4d78-ace6-88e5f65fead3\",\"title\":\"\",\"messages\":[{\"role\":\"user\",\"content\":\"Help me brainstorm startup ideas\"}],\"sources\":[],\"model\":\"deepseek-r1\",\"created_at\":\"2025-06-02T14:46:56.367Z\"}",
+      "model": "deepseek-r1",
+      "time_to_first_token": 0.656
+    },
+    "user_id": null,
+    "anonymous_id": "xxx",
+    "timestamp": "2025-06-02T14:46:57.026Z"
   }
 ]

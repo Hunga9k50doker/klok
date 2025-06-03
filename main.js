@@ -284,11 +284,21 @@ class ClientAPI {
   }
 
   async sendMessage(payload) {
-    return this.makeRequest(`${this.baseURL}/chat`, "post", payload);
-  }
-
-  async createNewThread(payload) {
-    return this.makeRequest(`${this.baseURL}/chat`, "post", payload);
+    let token = null;
+    if (settings.USE_CAPTCHA) {
+      this.log(`Solving captcha...`);
+      token = await solveCaptcha();
+      if (!token) {
+        this.log("Captcha not solved, skipping...", "warning");
+        await sleep(1);
+        process.exit(0);
+      }
+    }
+    return this.makeRequest(`${this.baseURL}/chat`, "post", payload, {
+      extraHeaders: {
+        "x-turnstile-token": token,
+      },
+    });
   }
 
   async getTitle(payload) {
@@ -296,7 +306,7 @@ class ClientAPI {
   }
 
   async tracking(payload) {
-    return this.makeRequest(`https://vega.mira.network/api/v1/track`, "post", payload, {
+    return this.makeRequest(`${settings.BASE_URL_V2}`, "post", payload, {
       extraHeaders: {
         "write-key": settings.KEY_TRACKING,
       },
@@ -354,7 +364,7 @@ class ClientAPI {
       created_at: new Date().toISOString(),
       language: "english",
     };
-    const resultNewThread = await this.createNewThread(payload);
+    const resultNewThread = await this.sendMessage(payload);
     const res = await this.getTitle({
       id: id,
       messages: [
@@ -525,7 +535,8 @@ class ClientAPI {
     } while (retries < 2);
     const balanceData = await this.getBalance();
     if (userData.success && balanceData.success) {
-      this.log(`Google Linked: ${userData.data?.is_google_linked} | Tier: ${userData.data.tier} | Points: ${balanceData.data.total_points}`, "custom");
+      const { email, name } = userData.data;
+      this.log(`Google Linked: ${userData.data?.is_google_linked ? email : "Not linked"} | Tier: ${userData.data.tier} | Points: ${balanceData.data.total_points}`, "custom");
     } else {
       return this.log("Can't sync new data...skipping", "warning");
     }

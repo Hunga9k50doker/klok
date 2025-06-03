@@ -38,6 +38,7 @@ const settings = {
 
   API_ID: process.env.API_ID ? process.env.API_ID : null,
   BASE_URL: process.env.BASE_URL ? process.env.BASE_URL : "https://api1-pp.klokapp.ai/v1",
+  BASE_URL_V2: process.env.BASE_URL_V2 ? process.env.BASE_URL_V2 : "https://api1-pp.klokapp.ai/v1",
   REF_CODE: process.env.REF_CODE ? process.env.REF_CODE : "WGFMTG2R",
 
   USE_CAPTCHA: process.env.USE_CAPTCHA ? process.env.USE_CAPTCHA.toLowerCase() === "true" : false,
